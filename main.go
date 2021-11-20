@@ -5,4 +5,6 @@ import "fmt"
 func main() {
 	blockchain := NewBlockchain()
 	fmt.Printf("%v", blockchain)
+
+	blockchain.ProofOfWork(1)
 }
