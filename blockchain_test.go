@@ -20,7 +20,7 @@ func TestBlockchain_ProofOfWork(t *testing.T) {
 		{
 			name: "should return first proof of 533",
 			fields: fields{
-				NewBlockchain().chain,
+				NewBlockchain().Chain,
 			},
 			args: args{
 				previousProof: 1,
@@ -31,7 +31,7 @@ func TestBlockchain_ProofOfWork(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			b := &Blockchain{
-				chain: tt.fields.chain,
+				Chain: tt.fields.chain,
 			}
 			if got := b.ProofOfWork(tt.args.previousProof); got != tt.want {
 				t.Errorf("Blockchain.ProofOfWork() = %v, want %v", got, tt.want)

@@ -59,6 +59,7 @@ func (b *Blockchain) ProofOfWork(previousProof uint) uint {
 		hash := fmt.Sprintf("%x", hashOperation[:])
 
 		if hash[:4] == "0000" {
+			fmt.Printf("Successfully found hash %s\n", hash)
 			checkProof = true
 		} else {
 			newProof++
