@@ -18,8 +18,6 @@ Run app
 ./blockchain
 ```
 
-Get the blockchain
-
 Mine a block
 
 ```
@@ -32,6 +30,8 @@ curl http://localhost:8080/mine_block
   "timestamp": "2021-11-20T20:50:03.804875+10:00"
 }
 ```
+
+Get the blockchain
 
 ```
 curl http://localhost:8080/get_chain
