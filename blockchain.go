@@ -9,14 +9,14 @@ import (
 )
 
 type Block struct {
-	index         uint
-	timestamp     time.Time
-	proof         uint
-	previous_hash string
+	Index        uint      `json:"index,omitempty"`
+	Timestamp    time.Time `json:"timestamp,omitempty"`
+	Proof        uint      `json:"proof,omitempty"`
+	PreviousHash string    `json:"previous_hash,omitempty"`
 }
 
 type Blockchain struct {
-	chain []Block
+	Chain []Block `json:"chain,omitempty"`
 }
 
 func NewBlockchain() *Blockchain {
@@ -31,19 +31,19 @@ func NewBlockchain() *Blockchain {
 
 func (b *Blockchain) CreateBlock(proof uint, previousHash string) Block {
 	block := Block{
-		index:         uint(len(b.chain) + 1),
-		timestamp:     time.Now(),
-		proof:         proof,
-		previous_hash: previousHash,
+		Index:        uint(len(b.Chain) + 1),
+		Timestamp:    time.Now(),
+		Proof:        proof,
+		PreviousHash: previousHash,
 	}
 
-	b.chain = append(b.chain, block)
+	b.Chain = append(b.Chain, block)
 
 	return block
 }
 
 func (b *Blockchain) GetPreviousBlock() Block {
-	return b.chain[len(b.chain)-1]
+	return b.Chain[len(b.Chain)-1]
 }
 
 func (b *Blockchain) ProofOfWork(previousProof uint) uint {
@@ -68,17 +68,17 @@ func (b *Blockchain) ProofOfWork(previousProof uint) uint {
 }
 
 func (b *Blockchain) ChainValid() bool {
-	previousBlock := b.chain[0]
+	previousBlock := b.Chain[0]
 	blockIdx := 0
 
-	for blockIdx < len(b.chain) {
-		block := b.chain[blockIdx]
-		if block.previous_hash != hash(previousBlock) {
+	for blockIdx < len(b.Chain) {
+		block := b.Chain[blockIdx]
+		if block.PreviousHash != hash(previousBlock) {
 			return false
 		}
 
-		previousProof := previousBlock.proof
-		proof := block.proof
+		previousProof := previousBlock.Proof
+		proof := block.Proof
 
 		i := math.Pow(float64(proof), 2) - math.Pow(float64(previousProof), 2)
 

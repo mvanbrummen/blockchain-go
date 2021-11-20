@@ -11,24 +11,24 @@ func main() {
 
 	r.GET("/mine_block", func(c *gin.Context) {
 		previousBlock := blockchain.GetPreviousBlock()
-		previousProof := previousBlock.proof
+		previousProof := previousBlock.Proof
 		proof := blockchain.ProofOfWork(previousProof)
 		previousHash := hash(previousBlock)
 		block := blockchain.CreateBlock(proof, previousHash)
 
 		c.JSON(200, gin.H{
 			"message":       "A block is mined",
-			"index":         block.index,
-			"timestamp":     block.timestamp,
-			"proof":         block.proof,
-			"previous_hash": block.previous_hash,
+			"index":         block.Index,
+			"timestamp":     block.Timestamp,
+			"proof":         block.Proof,
+			"previous_hash": block.PreviousHash,
 		})
 	})
 
 	r.GET("/get_chain", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"chain":  blockchain.chain,
-			"length": len(blockchain.chain),
+			"chain":  blockchain.Chain,
+			"length": len(blockchain.Chain),
 		})
 	})
 
