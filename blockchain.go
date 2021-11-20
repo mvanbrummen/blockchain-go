@@ -20,14 +20,16 @@ type Blockchain struct {
 }
 
 func NewBlockchain() *Blockchain {
-	b := &Blockchain{}
+	b := &Blockchain{
+		[]Block{},
+	}
 
 	b.CreateBlock(1, "0")
 
 	return b
 }
 
-func (b *Blockchain) CreateBlock(proof uint, previousHash string) {
+func (b *Blockchain) CreateBlock(proof uint, previousHash string) Block {
 	block := Block{
 		index:         uint(len(b.chain) + 1),
 		timestamp:     time.Now(),
@@ -36,6 +38,8 @@ func (b *Blockchain) CreateBlock(proof uint, previousHash string) {
 	}
 
 	b.chain = append(b.chain, block)
+
+	return block
 }
 
 func (b *Blockchain) GetPreviousBlock() Block {
