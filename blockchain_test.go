@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 
 func TestBlockchain_ProofOfWork(t *testing.T) {
@@ -52,9 +53,14 @@ func Test_hash(t *testing.T) {
 		{
 			name: "should return hash for block",
 			args: args{
-				NewBlockchain().GetPreviousBlock(),
+				Block{
+					Index:        1,
+					Timestamp:    time.Date(2021, time.April, 1, 1, 1, 1, 1, time.Local),
+					Proof:        4216,
+					PreviousHash: "0",
+				},
 			},
-			want: "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+			want: "a5e020f46f8eb7e3f3b5f1c5cb86fd270ae6cbd864cb45a4f948d8ae5bafb381",
 		},
 	}
 	for _, tt := range tests {
