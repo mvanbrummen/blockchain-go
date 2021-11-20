@@ -52,11 +52,7 @@ func (b *Blockchain) ProofOfWork(previousProof uint) uint {
 
 	for !checkProof {
 		fmt.Printf("Trying proof %d\n", newProof)
-		i := math.Pow(float64(newProof), 2) - math.Pow(float64(previousProof), 2)
-
-		hashOperation := sha256.Sum256([]byte(fmt.Sprintf("%f", i)))
-
-		hash := fmt.Sprintf("%x", hashOperation[:])
+		hash := calculateProofHash(newProof, previousProof)
 
 		if hash[:4] == "0000" {
 			fmt.Printf("Successfully found hash %s\n", hash)
@@ -81,11 +77,7 @@ func (b *Blockchain) ChainValid() bool {
 		previousProof := previousBlock.Proof
 		proof := block.Proof
 
-		i := math.Pow(float64(proof), 2) - math.Pow(float64(previousProof), 2)
-
-		hashOperation := sha256.Sum256([]byte(fmt.Sprintf("%f", i)))
-
-		hash := fmt.Sprintf("%x", hashOperation[:])
+		hash := calculateProofHash(proof, previousProof)
 
 		if hash[:4] != "0000" {
 			return false
@@ -105,4 +97,14 @@ func hash(block Block) string {
 	}
 
 	return fmt.Sprintf("%x", sha256.Sum256(json))
+}
+
+func calculateProofHash(proof uint, previousProof uint) string {
+	i := math.Pow(float64(proof), 2) - math.Pow(float64(previousProof), 2)
+
+	hashOperation := sha256.Sum256([]byte(fmt.Sprintf("%f", i)))
+
+	hash := fmt.Sprintf("%x", hashOperation[:])
+
+	return hash
 }
