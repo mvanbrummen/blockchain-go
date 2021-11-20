@@ -70,7 +70,7 @@ func (b *Blockchain) ProofOfWork(previousProof uint) uint {
 
 func (b *Blockchain) ChainValid() bool {
 	previousBlock := b.Chain[0]
-	blockIdx := 0
+	blockIdx := 1
 
 	for blockIdx < len(b.Chain) {
 		block := b.Chain[blockIdx]
@@ -87,7 +87,7 @@ func (b *Blockchain) ChainValid() bool {
 
 		hash := fmt.Sprintf("%x", hashOperation[:])
 
-		if hash[:4] == "0000" {
+		if hash[:4] != "0000" {
 			return false
 		}
 
